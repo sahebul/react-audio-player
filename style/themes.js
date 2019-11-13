@@ -1,0 +1,8 @@
+export default{
+  BUTTON_COLOR:"#1abc8c",
+  BACKGROUND_COLOR:"#D3D4D4",
+  THEME_COLOR:"#012640",
+  THEME_TEXT_COLOR:"#fff",
+  TEXT_COLOR:"#000000",
+  FOOTER_COLOR:"#2a6086"
+}
