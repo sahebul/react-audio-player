@@ -135,7 +135,20 @@ class AudioList extends Component{
   onPlaybackStatusUpdate=status=>{
     console.log("playback status"+JSON.stringify(status))
     var playableDurationMillis=status.playableDurationMillis;
+    var durationMillis=status.durationMillis;
+    
     var positionMillis=status.positionMillis;
+   
+    this.setState({
+      isBuffering: status.isBuffering,
+      isPlaying:status.isPlaying,
+
+    })
+    if (status.didJustFinish && !status.isLooping) {
+      // The player has just finished playing and will stop. Maybe you want to play something else?
+      this.handleNextTrack();
+    }
+
     // let count=0;
     // if(positionMillis === 0){
     //   console.log("inside zerooooooooooooooooooooooooooooooooooooooooooooooooooooo"+count);
@@ -152,14 +165,12 @@ class AudioList extends Component{
     //   }
     //
     // }
-    this.setState({
-      isBuffering: status.isBuffering,
-      isPlaying:status.isPlaying,
-
-    })
+    
   }
         playSelectedTrack = async (index)=>{
-        let { playbackInstance,audioFiles } = this.state
+          console.log("play at index of "+index);
+        let { playbackInstance } = this.state
+        console.log("playback instance of audio player"+(playbackInstance));
           if(playbackInstance){
             await playbackInstance.unloadAsync()
             this.setState({
@@ -167,6 +178,11 @@ class AudioList extends Component{
             })
               this.loadAudio()
 
+          }else{
+            this.setState({
+              playindex:index
+            })
+              this.loadAudio()
           }
         }
         handlePlayPause = async () => {
